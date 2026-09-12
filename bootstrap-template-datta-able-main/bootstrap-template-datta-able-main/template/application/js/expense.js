@@ -1,5 +1,7 @@
 loadData();
 
+btnAction = "Insert";
+
 $("#addNew").on("click", function() {
     $("#expenseModal").modal("show");
 });
@@ -10,12 +12,25 @@ $("#expenseForm").on("submit", function(event) {
     let amount = $("#amount").val();
     let type = $("#type").val();
     let description = $("#description").val();
-    let sendingData = {
+    let id = $("#update_id").val();
+     let sendingData = {}
+    if(btnAction == "Insert"){
+    sendingData = {
         "amount": amount,
         "type": type,
         "description": description,
         "action": "register_expense"
+    
     };
+}else{
+    sendingData = {
+        "id": id,
+        "amount": amount,
+        "type": type,
+        "description": description,
+        "action": "update_expense"
+}
+}
     $.ajax({
         method: "POST",
         dataType: "json",
@@ -25,8 +40,11 @@ $("#expenseForm").on("submit", function(event) {
             let status = data.status;
             let response = data.data;
             if(status) {
+                
 
                displayMessage("success",response);
+               btnAction = "Insert";
+               loadData();
             } else {
                displayMessage("error",response);
             }
@@ -60,6 +78,7 @@ function displayMessage(type, message) {
     }
 }
 function loadData() {
+    $("#expenseTable tbody").html(' ');
     let sendingData = {
         "action": "get_user_transactions"
     }
@@ -126,8 +145,7 @@ $.ajax({
             let html =' ';
             let tr = ' ';
             if(status) {
-                 
-                      
+               btnAction = "update";
                  $("#update_id").val(response['id']);
                     $("#amount").val(response['amount']);
                     $("#type").val(response['type']);
@@ -154,3 +172,4 @@ $("#expenseTable").on("click", "a.update_info"   ,function() {
     let id = $(this).attr("update_id");
 fethUserInfo(id);
 });
+    

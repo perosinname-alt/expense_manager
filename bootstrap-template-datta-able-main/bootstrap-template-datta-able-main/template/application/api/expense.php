@@ -47,7 +47,7 @@ function update_expense($conn){
         if($row['message'] == 'Updated'){
             $data =array( "status" => true, "data" => "updated successfully");
         }
-
+    
         
     } else {
         $data = array("status" => false, "data" => $conn->error);
