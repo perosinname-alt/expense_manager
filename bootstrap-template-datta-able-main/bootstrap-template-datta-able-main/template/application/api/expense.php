@@ -70,9 +70,10 @@ function get_user_transactions($conn){
     echo json_encode($data);
 }
 function get_expense_info($conn){
+    extract($_POST);
     $data = array();
     $array_data = array();
-    $query = "SELECT * FROM `expense`";
+    $query = "SELECT * FROM `expense` WHERE id = '$id'";
     $result = $conn->query($query);
     if ($result) {
         $row = $result->fetch_assoc();
