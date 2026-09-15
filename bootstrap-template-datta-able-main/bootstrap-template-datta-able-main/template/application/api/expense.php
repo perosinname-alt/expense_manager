@@ -69,6 +69,21 @@ function get_user_transactions($conn){
     }
     echo json_encode($data);
 }
+function get_user_statement($conn){
+    $data = array();
+    $array_data = array();
+    $query = "CALL get_user_statement_sp(' USR001 ' , ' $from ' , ' $to ' )"; 
+    $result = $conn->query($query);
+    if ($result) {
+        while ($row = $result->fetch_assoc()) {
+            $array_data[] = $row;
+        }
+        $data = array("status" => "true", "data" => $array_data);
+    } else {
+        $data = array("status" => "false", "data" => $conn->error);
+    }
+    echo json_encode($data);
+}
 function get_expense_info($conn){
     extract($_POST);
     $data = array();
@@ -85,8 +100,6 @@ function get_expense_info($conn){
     }
     echo json_encode($data);
 }
-
-
 
 function delete_expense_info($conn){
     extract($_POST);
