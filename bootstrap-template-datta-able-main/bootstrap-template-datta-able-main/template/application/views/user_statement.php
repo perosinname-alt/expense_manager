@@ -78,6 +78,6 @@ include ('footer.php');
 
 
 
-<script src="../js/user_statement_sp.js"></script>
+<script src="../js/user_statement.js"></script>
 
 </script>
