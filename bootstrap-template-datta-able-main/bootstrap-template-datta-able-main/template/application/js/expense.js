@@ -164,6 +164,36 @@ $.ajax({
 
 }
 
+function DeleteExpenseInfo(id) {
+   let sendingData = {
+        "action": "delete_expense_info",
+        "id": id
+    }
+
+$.ajax({
+        method: "POST",
+        dataType: "json",
+        url: "../api/expense.php",
+        data: sendingData,
+        success: function(data) {
+            let status = data.status;
+            let response = data.data;
+            let html =' ';
+            let tr = ' ';
+            if(status) {
+           swal("Good job!", "response", "success");
+                loadData();   
+            } else {
+               swal(response);
+            }
+
+        },
+        error: function(data) {
+            displayMessage("error", "An error occurred while processing your request.");
+        },
+    })
+
+}
 
 
  
@@ -172,4 +202,13 @@ $("#expenseTable").on("click", "a.update_info"   ,function() {
     let id = $(this).attr("update_id");
 fethUserInfo(id);
 });
+    
+$("#expenseTable").on("click", "a.delete_info"   ,function() {
+    let id = $(this).attr("delete_id");
+    if(confirm("Are you sure you want to delete this record?")) {
+            DeleteExpenseInfo(id);
+    }
+    
+});
+
     

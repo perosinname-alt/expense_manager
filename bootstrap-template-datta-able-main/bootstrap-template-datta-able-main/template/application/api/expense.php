@@ -85,6 +85,25 @@ function get_expense_info($conn){
     }
     echo json_encode($data);
 }
+
+
+
+function delete_expense_info($conn){
+    extract($_POST);
+    $data = array();
+    $array_data = array();
+    $query = "DELETE FROM `expense` WHERE id = '$id'";
+    $result = $conn->query($query);
+    if ($result) {
+        
+          $data = array("status" => "true", "data" => "Deleted successfully👋👋👋");
+    
+       
+    } else {
+        $data = array("status" => "false", "data" => $conn->error);
+    }
+    echo json_encode($data);
+}
 if(isset($_POST['action'])){
 $action = $_POST['action'];
 $action($conn);
