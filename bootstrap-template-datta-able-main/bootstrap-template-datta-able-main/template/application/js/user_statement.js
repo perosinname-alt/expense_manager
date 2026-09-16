@@ -1,31 +1,32 @@
 $("#from").attr("disabled",true);
 $("#to") .attr("disabled",true);
+$("#type") .on ("change",function(){
 
-$("#expenseForm").on("submit", function(event) {
+    if($("#type").val() == 0){
+        $("#from").attr("disabled",true);
+        $("#to") .attr("disabled",true);
+    }else{
+        $("#from").attr("disabled",false);
+        $("#to") .attr("disabled",false);
+    }
+
+
+
+})
+$("#userForm").on("submit", function(event) {
 
     event.preventDefault();
-    let amount = $("#amount").val();
-    let type = $("#type").val();
-    let description = $("#description").val();
-    let id = $("#update_id").val();
-     let sendingData = {}
-    if(btnAction == "Insert"){
-    sendingData = {
-        "amount": amount,
-        "type": type,
-        "description": description,
-        "action": "register_expense"
+    $("#userTable tr").html(" ");
+    let from = $("#from").val(); 
+    let to = $("#to").val();
+     let sendingData = {
+        "from"  : from,
+        "to"  : to,
+        "action":"get_user_statement"
+
+     }
     
-    };
-}else{
-    sendingData = {
-        "id": id,
-        "amount": amount,
-        "type": type,
-        "description": description,
-        "action": "update_expense"
-}
-}
+   
     $.ajax({
         method: "POST",
         dataType: "json",
@@ -34,15 +35,27 @@ $("#expenseForm").on("submit", function(event) {
         success: function(data) {
             let status = data.status;
             let response = data.data;
+            let tr = ' ';
+            let th = '';
             if(status) {
-                
-
-               displayMessage("success",response);
-               btnAction = "Insert";
-               loadData();
+                    response.forEach(res => {
+                        th= "<tr>";
+                        for(let r in res ){
+                        th += `<th>${r}</th>`
+                        }
+                              th += "</tr>";
+                                    tr += "<tr>";
+                                    for(let r in res ){
+                                        tr+= `<td>${res[r]}</td>`;
+                                    }
+                                          tr += "</tr>";
+                    })
+                    $("#userTable thead").append(th);
+                    $("#userTable tbody").append(tr);
             } else {
                displayMessage("error",response);
             }
+
 
         },
         error: function(data) {

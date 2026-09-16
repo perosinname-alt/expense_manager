@@ -70,9 +70,10 @@ function get_user_transactions($conn){
     echo json_encode($data);
 }
 function get_user_statement($conn){
+    extract($_POST);
     $data = array();
     $array_data = array();
-    $query = "CALL get_user_statement_sp(' USR001 ' , ' $from ' , ' $to ' )"; 
+    $query = "CALL get_user_statement_sp('USR001' ,'$from' ,'$to')"; 
     $result = $conn->query($query);
     if ($result) {
         while ($row = $result->fetch_assoc()) {

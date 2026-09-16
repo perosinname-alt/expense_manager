@@ -23,8 +23,11 @@ include ('sidebar.php');
                                             <span class="d-block m-t-5">use class <code>table</code> inside table element</span>
                                         </div>
                                         <div class="card-block table-border-style">
+                                             <form id = "userForm">
                                             <div class="row">
-                                <div class="col-sm-4">
+                                
+                               
+                                            <div class="col-sm-4">
                                     <select name="type" id="type" class="form-control">
                                         <option value="0">All </option>
                                          <option value="Customer">Customer</option>
@@ -36,19 +39,14 @@ include ('sidebar.php');
                                 <div class="col-sm-4">
                                     <input type="date" name="to" id="to" class="form-control">
                                 </div>
-                                <button id="addNew" class="btn btn-primary m-3">Add New Transaction</button>
-                             </div>
-                                            <div class="table-responsive">
+                                <button Type="submit"  id="addNew" class="btn btn-primary m-3">Add New Transaction</button>
+                                    </div>
+                                    </form>
+                                            <div class="table-responsive" id="print_area">
                                                 
-                                                <table class="table" id = "expenseTable">
+                                                <table class="table" id = "userTable">
                                                     <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Amount</th>
-                                                            <th>Type</th>
-                                                            <th>Description</th>
-                                                            <th>Action</th>
-                                                        </tr>
+                                                        
                                                     </thead>
                                                  <tbody>
                                                     
@@ -56,6 +54,9 @@ include ('sidebar.php');
 
                                                 </table>
                                             </div>
+                                            <button class="btn btn-success"><i class ="fa fa-print"></i>Print</button>
+                                            <button class="btn btn-info"><i class="fa fa-file-excel"></i>Export</button>
+
                                         </div>
                                     </div>
                                 </div>
@@ -81,3 +82,7 @@ include ('footer.php');
 <script src="../js/user_statement.js"></script>
 
 </script>
+
+
+
+
