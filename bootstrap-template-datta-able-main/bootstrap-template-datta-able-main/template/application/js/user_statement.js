@@ -12,7 +12,29 @@ $("#type") .on ("change",function(){
 
 
 
-})
+});
+
+
+$("#print_statement").on("click", function(){
+    printStatement();
+});
+function  printStatement(){
+
+    let printArea = document.querySelector("#print_area");
+
+    let newWindow = window.open("");
+    newWindow.document.write(`<html><head><title></title>`);
+    newWindow.document.write(`</head><body>`);
+
+    newWindow.document.write(printArea.innerHTML);
+
+    newWindow.document.write(`</body></html>`);
+
+
+    newWindow.print();
+    newWindow.close();
+
+}
 $("#userForm").on("submit", function(event) {
 
     event.preventDefault();
