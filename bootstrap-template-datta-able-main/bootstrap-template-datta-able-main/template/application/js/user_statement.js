@@ -18,14 +18,41 @@ $("#type") .on ("change",function(){
 $("#print_statement").on("click", function(){
     printStatement();
 });
-function  printStatement(){
+function printStatement(){
 
     let printArea = document.querySelector("#print_area");
 
     let newWindow = window.open("");
     newWindow.document.write(`<html><head><title></title>`);
+    newWindow.document.write(`<style media="print">
+        
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+        body{
+        font-family: 'Poppins', sans-serif;
+        }
+        table{
+        width:100%;
+        }
+
+        th{
+        background-color : #04AA6D ! important;
+        color: white ! important;
+       
+        }
+        th  ,  td {
+         padding:15px ! important;
+         text-align: left !important;
+
+        }
+         th  ,  td {
+         border-bottom : 1px solid #ddd !important;
+         }
+
+        
+        </style>`)
     newWindow.document.write(`</head><body>`);
 
+    newWindow.document.write(``)
     newWindow.document.write(printArea.innerHTML);
 
     newWindow.document.write(`</body></html>`);

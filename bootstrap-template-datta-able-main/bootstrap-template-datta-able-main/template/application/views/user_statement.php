@@ -43,7 +43,7 @@ include ('sidebar.php');
                                     </div>
                                     </form>
                                             <div class="table-responsive" id="print_area">
-                                                
+                                                <img width="80%" height="150px" src="../png.png ">
                                                 <table class="table" id = "userTable">
                                                     <thead>
                                                         
@@ -54,8 +54,8 @@ include ('sidebar.php');
 
                                                 </table>
                                             </div>
-                                            <button class="btn btn-success"id="print_statement"><i class ="fa fa-print"></i>Print</button>
-                                            <button class="btn btn-info"id="export_statement"><i class="fa fa-file-excel"></i>Export</button>
+                                            <button class="btn btn-success" id="print_statement"><i class ="fa fa-print"></i>Print</button>
+                                            <button class="btn btn-info" id="export_statement"><i class="fa fa-file-excel"></i>Export</button>
 
                                         </div>
                                     </div>
