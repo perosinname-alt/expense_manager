@@ -62,6 +62,16 @@ function printStatement(){
     newWindow.close();
 
 }
+
+$('#export_statement').on('click', function() {
+    let file = new Blob([$('#print_area').html()], {type:"application/vnd.ms-excel"});
+    let url = URL.createObjectURL(file);
+    let a = $("<a />", {
+      href: url,
+      download: "print_statement.xls"}).appendTo("body").get(0).click();
+    e.preventDefault();
+});
+
 $("#userForm").on("submit", function(event) {
 
     event.preventDefault();

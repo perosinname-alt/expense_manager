@@ -55,7 +55,7 @@ include ('sidebar.php');
                                                 </table>
                                             </div>
                                             <button class="btn btn-success" id="print_statement"><i class ="fa fa-print"></i>Print</button>
-                                            <button class="btn btn-info" id="export_statement"><i class="fa fa-file-excel"></i>Export</button>
+                                            <button class="btn btn-info" id="export_statement"><i class="fa fa-file"></i>Export</button>
 
                                         </div>
                                     </div>
