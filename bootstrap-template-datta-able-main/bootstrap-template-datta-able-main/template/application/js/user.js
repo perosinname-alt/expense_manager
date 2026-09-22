@@ -1,6 +1,16 @@
 loadData();
 
 btnAction = "Insert";
+let fileImage = document.querySelector("#image");
+let showInput = document.querySelector("#show");
+const reader = new FileReader();
+fileImage.addEventListener("change", (e) => {
+const selectedFile = e.target. files[0];
+reader.readAsDataURL(selectedFile);
+})
+reader.onload = e => {
+    showInput.src = e.target.result;
+}
 
 $("#addNew").on("click", function() {
     $("#expenseModal").modal("show");
