@@ -28,7 +28,7 @@ function register_user($conn){
 
     if(in_array($file_type,$allowedImages)){
         if($file_size > $max_size){
-            $error_array[] = $file_size/1024/1024 . "Files size must be less then" . $max_size/1024/1024  .  "MB";
+            $error_array[] = $file_size/1024/1024 . " MB Files size must be less then" . $max_size/1024/1024  .  "MB";
         }
     }else{
         $error_array[] = "This file is not Allowed" . $file_type;
