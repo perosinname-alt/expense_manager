@@ -50,7 +50,8 @@ $("#userForm").on("submit", function(event) {
 
                displayMessage("success",response);
                btnAction = "Insert";
-              // loadData();
+               $("#userForm")[0].reset();
+               loadData();
             } else {
                displayMessage("error",response);
             }
@@ -84,32 +85,37 @@ function displayMessage(type, message) {
     }
 }
 function loadData() {
-    $("#expenseTable tbody").html(' ');
+    $("#userTable tr").html(' ');
     let sendingData = {
-        "action": "get_user_transactions"
+        "action": "get_user_list"
     }
 
 $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/expense.php",
+        url: "../api/user.php",
         data: sendingData,
         success: function(data) {
             let status = data.status;
             let response = data.data;
             let html =' ';
             let tr = ' ';
+            let th = ' ';
             if(status) {
                     response.forEach(res => {
+                         th = "<tr>";
+                        for(let i in res){
+                           th += `<th>${i}</th>`;
+                        }
+                         
+                        th+="<th>Action</th><tr>"
                         tr += "<tr>";
                         for(let r in res ){
-                       if(r == "type"){
-                        if(res[r] == "income"){
-                            tr += `<td><span class="badge badge-success">${res[r]}</span></td>`
+                       if(r == "image"){
+                    
+                            tr += `<td><img style="width : 50px; height:50px;border-radius:50%;object-fit:cover;" src="../uploads/${res[r]}"></td>`
 
-                        }else{
-                               tr += `<td><span class="badge badge-danger">${res[r]}</span></td>`
-                        }
+                        
                        }else{
                         tr += `<td>${res[r]}</td>`
                        }
@@ -121,8 +127,8 @@ $.ajax({
 
                               tr += "</tr>";
                     })
-                    $("#expenseTable tbody").append(tr);
-              
+                    $("#userTable thead").append(th);
+                    $("#userTable tbody").append(tr);
             } else {
                displayMessage("error",response);
             }

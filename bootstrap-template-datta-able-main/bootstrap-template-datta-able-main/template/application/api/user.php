@@ -71,10 +71,10 @@ function update_expense($conn){
     }
     echo json_encode($data);
 }
-function get_user_transactions($conn){
+function get_user_list($conn){
     $data = array();
     $array_data = array();
-    $query = "SELECT `id`, `amount`, `type`, `description` FROM `expense` WHERE 1";
+    $query = "SELECT*FROM `users` ";
     $result = $conn->query($query);
     if ($result) {
         while ($row = $result->fetch_assoc()) {
