@@ -13,39 +13,35 @@ reader.onload = e => {
 }
 
 $("#addNew").on("click", function() {
-    $("#expenseModal").modal("show");
+    $("#userModal").modal("show");
 });
 
-$("#expenseForm").on("submit", function(event) {
+$("#userForm").on("submit", function(event) {
 
-    event.preventDefault();
-    let amount = $("#amount").val();
-    let type = $("#type").val();
-    let description = $("#description").val();
-    let id = $("#update_id").val();
-     let sendingData = {}
-    if(btnAction == "Insert"){
-    sendingData = {
-        "amount": amount,
-        "type": type,
-        "description": description,
-        "action": "register_expense"
+    event.preventDefault()
     
-    };
+    //let amount = $("#amount").val();
+   // let type = $("#type").val();
+    //let description = $("#description").val();
+    //let id = $("#update_id").val();
+    
+    let form_data = new FormData($("#userForm")[0]);
+    form_data .append("image",$("input[type=file]")[0].files[0]);
+
+
+
+    if(btnAction == "Insert"){
+    form_data.append("action","register_user");
 }else{
-    sendingData = {
-        "id": id,
-        "amount": amount,
-        "type": type,
-        "description": description,
-        "action": "update_expense"
-}
+    
 }
     $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/expense.php",
-        data: sendingData,
+        url: "../api/user.php",
+        data: form_data,
+        processData : false,
+        contentType : false,
         success: function(data) {
             let status = data.status;
             let response = data.data;
@@ -54,7 +50,7 @@ $("#expenseForm").on("submit", function(event) {
 
                displayMessage("success",response);
                btnAction = "Insert";
-               loadData();
+              // loadData();
             } else {
                displayMessage("error",response);
             }

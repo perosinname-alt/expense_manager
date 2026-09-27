@@ -46,7 +46,7 @@ include ('sidebar.php');
                                     </div>
                                 </div>
                            </div>
-        <div class="modal" tabindex="-1" role="dialog" id = "expenseModal">
+        <div class="modal" tabindex="-1" role="dialog" id = "userModal">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -56,7 +56,7 @@ include ('sidebar.php');
         </button>
       </div>
       <div class="modal-body">
-        <form id="expenseForm">
+        <form id="userForm" enctype="multipart/form-data">
             <input type="hidden" name="update_id" id="update_id">
             <div class="row">
                 <div class="col-sm-12">
