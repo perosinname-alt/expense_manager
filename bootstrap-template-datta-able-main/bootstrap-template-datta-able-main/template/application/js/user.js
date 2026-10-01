@@ -33,7 +33,7 @@ $("#userForm").on("submit", function(event) {
     if(btnAction == "Insert"){
     form_data.append("action","register_user");
 }else{
-    
+    form_data.append("action","update_user");
 }
     $.ajax({
         method: "POST",
@@ -113,7 +113,7 @@ $.ajax({
                         for(let r in res ){
                        if(r == "image"){
                     
-                            tr += `<td><img style="width : 50px; height:50px;border-radius:50%;object-fit:cover;" src="../uploads/${res[r]}"></td>`
+                            tr += `<td><img style="width : 100px; height:100px;border:1px solid #e3ebe7;border-radius:50%;object-fit:cover;" src="../uploads/${res[r]}"></td>`
 
                         
                        }else{
@@ -142,14 +142,14 @@ $.ajax({
 }
 function fethUserInfo(id) {
    let sendingData = {
-        "action": "get_expense_info",
+        "action": "get_user_info",
         "id": id
     }
 
 $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/expense.php",
+        url: "../api/user.php",
         data: sendingData,
         success: function(data) {
             let status = data.status;
@@ -159,11 +159,9 @@ $.ajax({
             if(status) {
                btnAction = "update";
                  $("#update_id").val(response['id']);
-                    $("#amount").val(response['amount']);
-                    $("#type").val(response['type']);
-                    $("#description").val(response['description']);
-                 $("#expenseModal").modal("show");
-                   
+                 $("#username").val(response['username']);
+                 $("#show").attr('src',`../uploads/${response['image']}`);
+                 $("#userModal").modal('show');
             } else {
                displayMessage("error",response);
             }
@@ -178,14 +176,14 @@ $.ajax({
 
 function DeleteExpenseInfo(id) {
    let sendingData = {
-        "action": "delete_expense_info",
+        "action": "delete_user_info",
         "id": id
     }
 
 $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/expense.php",
+        url: "../api/user.php",
         data: sendingData,
         success: function(data) {
             let status = data.status;
@@ -193,7 +191,7 @@ $.ajax({
             let html =' ';
             let tr = ' ';
             if(status) {
-           swal("Good job!", "response", "success");
+           swal("Good job!", response, "success");
                 loadData();   
             } else {
                swal(response);
@@ -210,12 +208,12 @@ $.ajax({
 
  
     
-$("#expenseTable").on("click", "a.update_info"   ,function() {
+$("#userTable").on("click", "a.update_info"   ,function() {
     let id = $(this).attr("update_id");
 fethUserInfo(id);
 });
     
-$("#expenseTable").on("click", "a.delete_info"   ,function() {
+$("#userTable").on("click", "a.delete_info"   ,function() {
     let id = $(this).attr("delete_id");
     if(confirm("Are you sure you want to delete this record?")) {
             DeleteExpenseInfo(id);
