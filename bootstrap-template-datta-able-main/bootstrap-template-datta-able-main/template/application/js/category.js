@@ -44,7 +44,7 @@ $("#categoryForm").on("submit", function(event) {
 
                displayMessage("success",response);
                btnAction = "Insert";
-               //loadData();
+               loadData();
             } else {
                displayMessage("error",response);
             }
@@ -80,7 +80,7 @@ function displayMessage(type, message) {
 function loadData() {
     $("#categoryTable tbody").html(' ');
     let sendingData = {
-        "action": "get_user_transactions"
+        "action": "read_all_category"
     }
 
 $.ajax({
@@ -97,17 +97,10 @@ $.ajax({
                     response.forEach(res => {
                         tr += "<tr>";
                         for(let r in res ){
-                       if(r == "type"){
-                        if(res[r] == "income"){
-                            tr += `<td><span class="badge badge-success">${res[r]}</span></td>`
-
-                        }else{
-                               tr += `<td><span class="badge badge-danger">${res[r]}</span></td>`
-                        }
-                       }else{
+             
                         tr += `<td>${res[r]}</td>`
                        }
-                        }
+                        
             tr += `<td><a class="btn btn-info update_info" update_id=${res['id']}><I
             class="fas fa-edit" style="color: #fff;"></i></a>&nbsp;&nbsp;<a class="btn btn-danger
             delete_info" delete_id=${res['id']}> <i class="fas fa-trash"style="color: #fff;"></i> </a> </td>`;
@@ -128,7 +121,7 @@ $.ajax({
     })
 
 }
-function fethUserInfo(id) {
+function fetchCategoryInfo(id) {
    let sendingData = {
         "action": "get_category_info",
         "id": id
@@ -180,7 +173,7 @@ $.ajax({
             let html =' ';
             let tr = ' ';
             if(status) {
-           swal("Good job!", "response", "success");
+           swal("Good job!", response, "success");
                 loadData();   
             } else {
                swal(response);
@@ -199,7 +192,7 @@ $.ajax({
     
 $("#categoryTable").on("click", "a.update_info"   ,function() {
     let id = $(this).attr("update_id");
-fethUserInfo(id);
+fetchCategoryInfo(id);
 });
     
 $("#categoryTable").on("click", "a.delete_info"   ,function() {
