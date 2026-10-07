@@ -106,7 +106,7 @@ $.ajax({
                         for (let i in res) {
                             th += `<th>${i}</th>`;
                         }
-                        th +="</tr>";
+                        th +="<th>Action</th></tr>";
                         tr += "<tr>";
                         tr += `<td>${res['id']}</td>`;
                         tr += `<td>${res['name']}</td>`;

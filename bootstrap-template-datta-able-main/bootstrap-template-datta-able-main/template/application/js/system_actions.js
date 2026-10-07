@@ -33,7 +33,7 @@ $("#actionForm").on("submit", function(event) {
         "name": name,
         "link_id": link_id,
         "system_action": system_action,
-        "action": "update_link"
+        "action": "update_system_action"
 }
 }
     $.ajax({
@@ -83,7 +83,7 @@ function displayMessage(type, message) {
     }
 }
 function loadData() {
-    $("#actionTable tbody").html(' ');
+    $("#actionTable tr").html(' ');
     let sendingData = {
         "action": "read_all_system_action"
     }
@@ -105,7 +105,7 @@ $.ajax({
                         for (let i in res) {
                             th += `<th>${i}</th>`;
                         }
-                        th +="</tr>";
+                        th +="<th>Action</th></tr>";
                         tr += "<tr>";
                         tr += `<td>${res['id']}</td>`;
                         tr += `<td>${res['name']}</td>`;
@@ -171,14 +171,14 @@ $.ajax({
 
 function fetchlinkInfo(id) {
    let sendingData = {
-        "action": "get_link_info",
+        "action": "get_action_info",
         "id": id
     }
 
 $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/system_links.php",
+        url: "../api/system_actions.php",
         data: sendingData,
         success: function(data) {
             let status = data.status;
@@ -189,8 +189,8 @@ $.ajax({
                btnAction = "update";
                  $("#update_id").val(response['id']);
                     $("#name").val(response['name']);
-                    $("#link_id").val(response['link']);
-                    $("#category_id").val(response['category_id']);
+                    $("#link_id").val(response['link_id']);
+                    $("#system_action").val(response['action']);
                  $("#actionModal").modal("show");
                    
             } else {
@@ -206,14 +206,14 @@ $.ajax({
 }
 function DeletelinkInfo(id) {
    let sendingData = {
-        "action": "delete_link_info",
+        "action": "delete_action_info",
         "id": id
     }
 
 $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/system_links.php",
+        url: "../api/system_actions.php",
         data: sendingData,
         success: function(data) {
             let status = data.status;
@@ -238,12 +238,12 @@ $.ajax({
 
  
     
-$("#linkTable").on("click", "a.update_info"   ,function() {
+$("#actionTable").on("click", "a.update_info"   ,function() {
     let id = $(this).attr("update_id");
 fetchlinkInfo(id);
 });
     
-$("#linkTable").on("click", "a.delete_info"   ,function() {
+$("#actionTable").on("click", "a.delete_info"   ,function() {
     let id = $(this).attr("delete_id");
     if(confirm("Are you sure you want to delete this record?")) {
             DeletelinkInfo(id);
