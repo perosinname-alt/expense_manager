@@ -1,8 +1,13 @@
- loadData();
+loadData();
 
 btnAction = "Insert";
 
+fillLinks();
+fillCategories();
 $("#addNew").on("click", function() {
+    btnAction = "Insert";
+    $("#linkForm")[0].reset();
+    $("#update_id").val('');
     $("#linkModal").modal("show");
 });
 
@@ -10,15 +15,15 @@ $("#linkForm").on("submit", function(event) {
 
     event.preventDefault();
     let name = $("#name").val();
-    let role = $("#role").val();
-    let icon = $("#icon").val();
+    let link_id = $("#link_id").val();
+    let category_id = $("#category_id").val();
     let id = $("#update_id").val();
      let sendingData = {}
     if(btnAction == "Insert"){
     sendingData = {
         "name": name,
-        "role": role,
-          "icon": icon,
+        "link": link_id,
+        "category": category_id,
         "action": "register_link"
     
     };
@@ -26,15 +31,15 @@ $("#linkForm").on("submit", function(event) {
     sendingData = {
         "id": id,
         "name": name,
-        "icon": icon,
-        "role": role,
+        "link": link_id,
+        "category": category_id,
         "action": "update_link"
 }
 }
     $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/link.php",
+        url: "../api/system_links.php",
         data: sendingData,
         success: function(data) {
             let status = data.status;
@@ -67,9 +72,9 @@ function displayMessage(type, message) {
         success.innerHTML = message;
 
    setTimeout(function(){
-    $("#expenseModal").modal('hide');
+    $("#linkModal").modal('hide');
     success.classList = "alert alert-success d-none";
-    $("#expenseForm")[0].reset();
+    $("#linkForm")[0].reset();
 },3000);
     } else {
         success.classList = "alert alert-success d-none";
@@ -80,26 +85,34 @@ function displayMessage(type, message) {
 function loadData() {
     $("#linkTable tbody").html(' ');
     let sendingData = {
-        "action": "read_all_link"
+        "action": "read_all_db_links"
     }
 
 $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/link.php",
+        url: "../api/system_links.php",
         data: sendingData,
         success: function(data) {
             let status = data.status;
             let response = data.data;
             let html =' ';
             let tr = ' ';
+            let th = ' ';
             if(status) {
                     response.forEach(res => {
+
+                        th = "<tr>";
+                        for (let i in res) {
+                            th += `<th>${i}</th>`;
+                        }
+                        th +="</tr>";
                         tr += "<tr>";
-                        for(let r in res ){
-             
-                        tr += `<td>${res[r]}</td>`
-                       }
+                        tr += `<td>${res['id']}</td>`;
+                        tr += `<td>${res['name']}</td>`;
+                        tr += `<td>${res['link']}</td>`;
+                        tr += `<td>${res['category_id'] ?? ''}</td>`;
+                        tr += `<td>${res['date']}</td>`;
                         
             tr += `<td><a class="btn btn-info update_info" update_id=${res['id']}><I
             class="fas fa-edit" style="color: #fff;"></i></a>&nbsp;&nbsp;<a class="btn btn-danger
@@ -108,7 +121,78 @@ $.ajax({
 
                               tr += "</tr>";
                     })
+                    $("#linkTable thead").append(th);
                     $("#linkTable tbody").append(tr);
+              
+            } else {
+               displayMessage("error",response);
+            }
+
+        },
+        error: function(data) {
+            displayMessage("error", "An error occurred while processing your request.");
+        },
+    })
+
+}
+function fillLinks() {
+    
+    let sendingData = {
+        "action": "read_all_system_links"
+    }
+
+$.ajax({
+        method: "POST",
+        dataType: "json",
+        url: "../api/system_links.php",
+        data: sendingData,
+        success: function(data) {
+            let status = data.status;
+            let response = data.data;
+            let html =' ';
+            let tr = ' ';
+            if(status) {
+                    response.forEach(res => {
+                        html += `<option value="${res}">${res}</option>`;
+
+                        
+                    })
+                    $("#link_id").append(html);
+              
+            } else {
+               displayMessage("error",response);
+            }
+
+        },
+        error: function(data) {
+            displayMessage("error", "An error occurred while processing your request.");
+        },
+    })
+
+}
+function fillCategories() {
+    
+    let sendingData = {
+        "action": "read_all_category"
+    }
+
+$.ajax({
+        method: "POST",
+        dataType: "json",
+        url: "../api/category.php",
+        data: sendingData,
+        success: function(data) {
+            let status = data.status;
+            let response = data.data;
+            let html =' ';
+            let tr = ' ';
+            if(status) {
+                    response.forEach(res => {
+                        html += `<option value="${res['id']}">${res['name']}</option>`;
+
+                        
+                    })
+                    $("#category_id").append(html);
               
             } else {
                displayMessage("error",response);
@@ -130,7 +214,7 @@ function fetchlinkInfo(id) {
 $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/link.php",
+        url: "../api/system_links.php",
         data: sendingData,
         success: function(data) {
             let status = data.status;
@@ -141,8 +225,8 @@ $.ajax({
                btnAction = "update";
                  $("#update_id").val(response['id']);
                     $("#name").val(response['name']);
-                    $("#icon").val(response['icon']);
-                    $("#role").val(response['role']);
+                    $("#link_id").val(response['link']);
+                    $("#category_id").val(response['category_id']);
                  $("#linkModal").modal("show");
                    
             } else {
@@ -165,7 +249,7 @@ function DeletelinkInfo(id) {
 $.ajax({
         method: "POST",
         dataType: "json",
-        url: "../api/link.php",
+        url: "../api/system_links.php",
         data: sendingData,
         success: function(data) {
             let status = data.status;
@@ -202,5 +286,3 @@ $("#linkTable").on("click", "a.delete_info"   ,function() {
     }
     
 });
-
-    

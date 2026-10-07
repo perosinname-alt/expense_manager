@@ -18,22 +18,16 @@ include ('sidebar.php');
                             <div class="col-xl-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>Basic Table</h5>
+                                            <h5>System Links</h5>
                                             <span class="d-block m-t-5">use class <code>table</code> inside table element</span>
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
                                                 <button id="addNew" class="btn btn-primary float-right">Add New link</button>
                                                 <table class="table" id = "linkTable">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Amount</th>
-                                                            <th>Type</th>
-                                                            <th>Description</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
+                                            <thead>
+                                                    
+                                        </thead>
                                                  <tbody>
                                                     
                                                  </tbody>
@@ -67,22 +61,22 @@ include ('sidebar.php');
                 </div>
                 <div class="col-sm-12">
                     <div class="form_group">
-                        <label for="">Name</label>
+                        <label for="">name</label>
                         <input type="text" name="name" id="name" class="form-control">
                     </div>
                 </div>
                  <div class="col-sm-12">
                     <div class="form_group">
                         <label for="">link</label>
-                        <select name="link" id="link" class="form-control">
+                        <select name="link_id" id="link_id" class="form-control">
                             
                         </select>
                     </div>
                 </div>
                 <div class="col-sm-12">
                     <div class="form_group">
-                        <label for="">link</label>
-                        <select name="link" id="link" class="form-control">
+                        <label for="">category</label>
+                        <select name="category_id" id="category_id" class="form-control">
                             
                         </select>
                     </div>

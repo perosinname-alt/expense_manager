@@ -5,7 +5,7 @@ header("Content-Type: application/json");
 include '../config/conn.php';
 //$action = $_POST['action'];
 
-function readAllLinks(){
+function read_all_system_links(){
     $data = array();
     $data_array = array();
     $search_result = glob('../views/*.php');
@@ -25,11 +25,30 @@ $data_array[] = $pure_link[2];
 
 
 
-function register_expense($conn){
+
+function register_link($conn){
     extract($_POST);
     $data = array();
 // build the query to call the stored procedure 
-    $query = "CALL register_expense_sp('','$amount','$type','$description','USR001')";
+   $query = "INSERT INTO system_links (name,link,category_id) VALUES('$name','$link','$category')";
+
+// Excecution
+
+$result = $conn->query($query);
+
+// chck if there is an error or not
+if($result){
+        $data = array("status" => true, "data" => "Registered 😊😊😎");
+}else{
+    $data = array("status" => false, "data" => $conn->error);
+}
+    echo json_encode($data); 
+}
+function update_link($conn){
+    extract($_POST);
+    $data = array();
+// build the query to call the stored procedure 
+    $query = "UPDATE system_links SET name='$name', link='$link', category_id='$category' WHERE id='$id'";
 
  
     // execute the query
@@ -37,47 +56,16 @@ function register_expense($conn){
 
     // check if the query was successful
     if ($result) { 
-        $row = $result->fetch_assoc();
-        if($row['message'] == 'Deny'){
-            $data = array("status" => false, "data" => "insufficient balance 😊😊😎");
-        } elseif($row['message'] == 'Registered'){
-            $data =array( "status" => true, "data" => "registered successfully");
-        }
-
-        
+        $data = array("status" => true, "data" => "updated successfully");
     } else {
         $data = array("status" => false, "data" => $conn->error);
     }
     echo json_encode($data); 
 }
-function update_expense($conn){
-    extract($_POST);
-    $data = array();
-// build the query to call the stored procedure 
-    $query = "CALL register_expense_sp('$id','$amount','$type','$description','USR001')";
-
- 
-    // execute the query
-    $result = $conn->query($query);
-
-    // check if the query was successful
-    if ($result) { 
-        $row = $result->fetch_assoc();
-      
-        if($row['message'] == 'Updated'){
-            $data =array( "status" => true, "data" => "updated successfully");
-        }
-    
-        
-    } else {
-        $data = array("status" => false, "data" => $conn->error);
-    }
-    echo json_encode($data); 
-}
-function get_user_transactions($conn){
+function read_all_db_links($conn){
     $data = array();
     $array_data = array();
-    $query = "SELECT `id`, `amount`, `type`, `description` FROM `expense` WHERE 1";
+    $query = "SELECT * FROM `system_links`";
     $result = $conn->query($query);
     if ($result) {
         while ($row = $result->fetch_assoc()) {
@@ -89,52 +77,37 @@ function get_user_transactions($conn){
     }
     echo json_encode($data);
 }
-function get_user_statement($conn){
+
+function get_link_info($conn){
     extract($_POST);
     $data = array();
     $array_data = array();
-    $query = "CALL get_user_statement_sp('USR001' ,'$from' ,'$to')"; 
-    $result = $conn->query($query);
-    if ($result) {
-        while ($row = $result->fetch_assoc()) {
-            $array_data[] = $row;
-        }
-        $data = array("status" => "true", "data" => $array_data);
-    } else {
-        $data = array("status" => "false", "data" => $conn->error);
-    }
-    echo json_encode($data);
-}
-function get_expense_info($conn){
-    extract($_POST);
-    $data = array();
-    $array_data = array();
-    $query = "SELECT * FROM `expense` WHERE id = '$id'";
+    $query = "SELECT * FROM `system_links` WHERE id = '$id'";
     $result = $conn->query($query);
     if ($result) {
         $row = $result->fetch_assoc();
-          $data = array("status" => "true", "data" => $row);
+          $data = array("status" => true, "data" => $row);
     
        
     } else {
-        $data = array("status" => "false", "data" => $conn->error);
+        $data = array("status" => false, "data" => $conn->error);
     }
     echo json_encode($data);
 }
 
-function delete_expense_info($conn){
+function delete_link_info($conn){
     extract($_POST);
     $data = array();
     $array_data = array();
-    $query = "DELETE FROM `expense` WHERE id = '$id'";
+    $query = "DELETE FROM `system_links` WHERE id = '$id'";
     $result = $conn->query($query);
     if ($result) {
         
-          $data = array("status" => "true", "data" => "Deleted successfully👋👋👋");
+          $data = array("status" => true, "data" => "Deleted successfully👋👋👋");
     
        
     } else {
-        $data = array("status" => "false", "data" => $conn->error);
+        $data = array("status" => false, "data" => $conn->error);
     }
     echo json_encode($data);
 }

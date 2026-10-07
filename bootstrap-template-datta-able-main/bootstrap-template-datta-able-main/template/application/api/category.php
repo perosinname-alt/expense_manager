@@ -17,14 +17,10 @@ function register_category($conn){
 
     // check if the query was successful
     if ($result) { 
-        
-       
             $data = array("status" => true, "data" => "Registered successfully 😊😊😎");
       
-        }
-
-        
-     else {
+          
+    } else {
         $data = array("status" => false, "data" => $conn->error);
     }
     echo json_encode($data); 
