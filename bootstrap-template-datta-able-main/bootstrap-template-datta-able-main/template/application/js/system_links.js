@@ -102,11 +102,11 @@ $.ajax({
             if(status) {
                     response.forEach(res => {
 
-                        th = "<tr>";
+                        th += "<tr>";
                         for (let i in res) {
                             th += `<th>${i}</th>`;
                         }
-                        th +="<th>Action</th></tr>";
+                        th += "<th>Action</th></tr>";
                         tr += "<tr>";
                         tr += `<td>${res['id']}</td>`;
                         tr += `<td>${res['name']}</td>`;

@@ -71,11 +71,11 @@ function displayMessage(type, message) {
         success.classList = "alert alert-success";
         success.innerHTML = message;
 
-   setTimeout(function(){
-    $("#actionModal").modal('hide');
-    success.classList = "alert alert-success d-none";
-    $("#actionForm")[0].reset();
-},3000);
+   //setTimeout(function(){
+   // $("#actionModal").modal('hide');
+    //success.classList = "alert alert-success d-none";
+    //$("#actionForm")[0].reset();
+//},3000);
     } else {
         success.classList = "alert alert-success d-none";
         error.classList = "alert alert-danger";

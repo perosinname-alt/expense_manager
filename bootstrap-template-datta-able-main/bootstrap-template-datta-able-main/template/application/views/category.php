@@ -83,6 +83,7 @@ include ('sidebar.php');
                         <select name="role" id="role" class="form-control">
                             <option value="Subscriber">Subscriber</option>
                             <option value="SuperAdmin">SuperAdmin</option>
+                              <option value="SuperAdmin">Dashboard</option>
                         </select>
                     </div>
                 </div>
